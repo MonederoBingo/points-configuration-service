@@ -5,12 +5,12 @@ import static org.springframework.boot.SpringApplication.run;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PointsConfigurationApplication
+public class App
 {
 
     public static void main(String[] args)
     {
-        run(PointsConfigurationApplication.class, args);
+        run(App.class, args);
     }
 
 }
