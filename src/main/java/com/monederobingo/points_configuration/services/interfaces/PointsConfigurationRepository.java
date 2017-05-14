@@ -5,7 +5,7 @@ import com.monederobingo.points_configuration.model.PointsConfiguration;
 
 public interface PointsConfigurationRepository
 {
-    PointsConfiguration getByCompanyId(long companyId);
+    PointsConfiguration getByCompanyId(long companyId) throws Exception;
 
-    int update(PointsConfiguration pointsConfiguration);
+    int update(PointsConfiguration pointsConfiguration) throws Exception;
 }

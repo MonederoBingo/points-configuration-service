@@ -65,7 +65,7 @@ public class PointsConfigurationServiceImplTest
     private PointsConfigurationRepository createPointsConfigurationRepositoryForUpdate() throws Exception
     {
         PointsConfigurationRepository pointsConfigurationRepository = createMock(PointsConfigurationRepository.class);
-        expect(pointsConfigurationRepository.update((PointsConfiguration) anyObject())).andReturn(1);
+        expect(pointsConfigurationRepository.update(anyObject())).andReturn(1);
         replay(pointsConfigurationRepository);
         return pointsConfigurationRepository;
     }

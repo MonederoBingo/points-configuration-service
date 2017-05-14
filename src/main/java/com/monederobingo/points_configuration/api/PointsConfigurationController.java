@@ -5,6 +5,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import com.monederobingo.points_configuration.model.PointsConfiguration;
 import com.monederobingo.points_configuration.model.ServiceResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ public class PointsConfigurationController
 {
     private PointsConfigurationService _pointsConfigurationService;
 
+    @Autowired
     public PointsConfigurationController(PointsConfigurationService pointsConfigurationService) {
         _pointsConfigurationService = pointsConfigurationService;
     }
