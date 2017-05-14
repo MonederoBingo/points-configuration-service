@@ -17,7 +17,6 @@ import com.monederobingo.points_configuration.api.interfaces.*;
 @RestController
 public class PointsConfigurationController
 {
-
     private PointsConfigurationService _pointsConfigurationService;
 
     public PointsConfigurationController(PointsConfigurationService pointsConfigurationService) {
