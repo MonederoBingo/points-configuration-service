@@ -1,13 +1,55 @@
 package com.monederobingo.points_configuration.common.environments;
 
-public interface EnvironmentFactory {
-    public DevEnvironment getDevEnvironment();
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-    public UnitTestEnvironment getUnitTestEnvironment();
+@Component
+public class EnvironmentFactory
+{
 
-    public FunctionalTestEnvironment getFunctionalTestEnvironment();
+    private final Environment devEnvironment;
+    private final Environment unitTestEnvironment;
+    private final Environment functionalTestEnvironment;
+    private final Environment uatEnvironment;
+    private final Environment prodEnvironment;
 
-    public UATEnvironment getUATEnvironment();
+    @Autowired
+    public EnvironmentFactory(
+            DevEnvironment devEnvironment,
+            UnitTestEnvironment unitTestEnvironment,
+            FunctionalTestEnvironment functionalTestEnvironment,
+            UATEnvironment uatEnvironment,
+            ProdEnvironment prodEnvironment)
+    {
+        this.devEnvironment = devEnvironment;
+        this.unitTestEnvironment = unitTestEnvironment;
+        this.functionalTestEnvironment = functionalTestEnvironment;
+        this.uatEnvironment = uatEnvironment;
+        this.prodEnvironment = prodEnvironment;
+    }
 
-    public ProdEnvironment getProdEnvironment();
+    public Environment getDevEnvironment()
+    {
+        return devEnvironment;
+    }
+
+    public Environment getUnitTestEnvironment()
+    {
+        return unitTestEnvironment;
+    }
+
+    public Environment getFunctionalTestEnvironment()
+    {
+        return functionalTestEnvironment;
+    }
+
+    public Environment getUatEnvironment()
+    {
+        return uatEnvironment;
+    }
+
+    public Environment getProdEnvironment()
+    {
+        return prodEnvironment;
+    }
 }

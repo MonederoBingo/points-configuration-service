@@ -1,53 +1,82 @@
 package com.monederobingo.points_configuration.common.environments;
 
-import com.monederobingo.points_configuration.common.PropertyManager;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-public class FunctionalTestEnvironment extends Environment {
+@Component
+public class FunctionalTestEnvironment extends Environment
+{
+
+    @Value("${db_driver}")
+    private String dbDriver;
+
+    @Value("${db_driver_class}")
+    private String dbDriverClass;
+
+    @Value("${functional_test.db_url}")
+    private String dbUrl;
+
+    @Value("${functional_test.db_user}")
+    private String dbUser;
+
+    @Value("${functional_test.db_password}")
+    private String dbPassword;
+
+    @Value("${functional_test.images_dir}")
+    private String imagesDir;
+
+    @Value("${functional_test.client_url}")
+    private String clientUrl;
 
     @Override
-    public String getDatabasePath() {
-        return PropertyManager.getProperty("db_savepoint_driver") + PropertyManager.getProperty("functional_test.db_url");
+    public String getDatabasePath()
+    {
+        return dbDriver + dbUrl;
+    }
+
+    public String getDatabaseDriverClass()
+    {
+        return dbDriverClass;
+    }
+
+    public String getDatabaseUsername()
+    {
+        return dbUser;
+    }
+
+    public String getDatabasePassword()
+    {
+        return dbPassword;
+    }
+
+    public String getImageDir()
+    {
+        return imagesDir;
+    }
+
+    public String getClientUrl()
+    {
+        return clientUrl;
     }
 
     @Override
-    public String getDatabaseDriverClass() {
-        return PropertyManager.getProperty("db_savepoint_driver_class");
-    }
-
-    @Override
-    public String getDatabaseUsername() {
-        return PropertyManager.getProperty("functional_test.db_user");
-    }
-
-    @Override
-    public String getDatabasePassword() {
-        return PropertyManager.getProperty("functional_test.db_password");
-    }
-
-    @Override
-    public String getImageDir() {
-        return PropertyManager.getProperty("functional_test.images_dir");
-    }
-
-    @Override
-    public String getClientUrl() {
-        return PropertyManager.getProperty("functional_test.client_url");
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
             return false;
         }
-        if (!(obj instanceof FunctionalTestEnvironment)) {
+        if (!(obj instanceof DevEnvironment))
+        {
             return false;
         }
-        FunctionalTestEnvironment that = (FunctionalTestEnvironment) obj;
+        DevEnvironment that = (DevEnvironment) obj;
         return getDatabasePath().equals(that.getDatabasePath());
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return getDatabasePath().hashCode();
     }
 }

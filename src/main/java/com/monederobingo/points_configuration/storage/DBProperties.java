@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DBProperties
 {
+    @Value("${db_driver}")
     private String dbDriver;
 
     public String getDbDriver()

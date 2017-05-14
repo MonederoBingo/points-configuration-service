@@ -1,53 +1,87 @@
 package com.monederobingo.points_configuration.common.environments;
 
-import com.monederobingo.points_configuration.common.PropertyManager;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-public class UnitTestEnvironment extends Environment {
+@Component
+public class UnitTestEnvironment extends Environment
+{
+
+    @Value("${db_driver}")
+    private String dbDriver;
+
+    @Value("${db_driver_class}")
+    private String dbDriverClass;
+
+    @Value("${unit_test.db_url}")
+    private String dbUrl;
+
+    @Value("${unit_test.db_user}")
+    private String dbUser;
+
+    @Value("${unit_test.db_password}")
+    private String dbPassword;
+
+    @Value("${unit_test.images_dir}")
+    private String imagesDir;
+
+    @Value("${unit_test.client_url}")
+    private String clientUrl;
 
     @Override
-    public String getDatabasePath() {
-        return PropertyManager.getProperty("db_driver") + PropertyManager.getProperty("unit_test.db_url");
+    public String getDatabasePath()
+    {
+        return dbDriver + dbUrl;
+    }
+
+    public String getDbUrl()
+    {
+        return dbUrl;
+    }
+
+    public String getDatabaseDriverClass()
+    {
+        return dbDriverClass;
+    }
+
+    public String getDatabaseUsername()
+    {
+        return dbUser;
+    }
+
+    public String getDatabasePassword()
+    {
+        return dbPassword;
+    }
+
+    public String getImageDir()
+    {
+        return imagesDir;
+    }
+
+    public String getClientUrl()
+    {
+        return clientUrl;
     }
 
     @Override
-    public String getDatabaseDriverClass() {
-        return PropertyManager.getProperty("db_driver_class");
-    }
-
-    @Override
-    public String getDatabaseUsername() {
-        return PropertyManager.getProperty("unit_test.db_user");
-    }
-
-    @Override
-    public String getDatabasePassword() {
-        return PropertyManager.getProperty("unit_test.db_password");
-    }
-
-    @Override
-    public String getImageDir() {
-        return PropertyManager.getProperty("unit_test.images_dir");
-    }
-
-    @Override
-    public String getClientUrl() {
-        return PropertyManager.getProperty("unit_test.client_url");
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
             return false;
         }
-        if (!(obj instanceof UnitTestEnvironment)) {
+        if (!(obj instanceof DevEnvironment))
+        {
             return false;
         }
-        UnitTestEnvironment that = (UnitTestEnvironment) obj;
+        DevEnvironment that = (DevEnvironment) obj;
         return getDatabasePath().equals(that.getDatabasePath());
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return getDatabasePath().hashCode();
     }
 }

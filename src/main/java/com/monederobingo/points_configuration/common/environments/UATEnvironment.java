@@ -1,53 +1,79 @@
 package com.monederobingo.points_configuration.common.environments;
 
-import com.monederobingo.points_configuration.common.PropertyManager;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-public class UATEnvironment extends Environment {
+@Component
+public class UATEnvironment extends Environment
+{
+
+    @Value("${db_driver}")
+    private String dbDriver;
+
+    @Value("${db_driver_class}")
+    private String dbDriverClass;
+
+    @Value("${uat.db_url}")
+    private String dbUrl;
+
+    @Value("${uat.db_user}")
+    private String dbUser;
+
+    @Value("${uat.db_password}")
+    private String dbPassword;
+
+    @Value("${uat.client_url}")
+    private String clientUrl;
 
     @Override
-    public String getDatabasePath() {
-        return PropertyManager.getProperty("db_driver") + PropertyManager.getProperty("uat.db_url");
+    public String getDatabasePath()
+    {
+        return dbDriver + dbUrl;
     }
 
-    @Override
-    public String getDatabaseDriverClass() {
-        return PropertyManager.getProperty("db_driver_class");
+    public String getDatabaseDriverClass()
+    {
+        return dbDriverClass;
     }
 
-    @Override
-    public String getDatabaseUsername() {
-        return PropertyManager.getProperty("uat.db_user");
+    public String getDatabaseUsername()
+    {
+        return dbUser;
     }
 
-    @Override
-    public String getDatabasePassword() {
-        return PropertyManager.getProperty("uat.db_password");
+    public String getDatabasePassword()
+    {
+        return dbPassword;
     }
 
-    @Override
-    public String getImageDir() {
+    public String getImageDir()
+    {
         return System.getenv("OPENSHIFT_DATA_DIR") + "images/uat/";
     }
 
-    @Override
-    public String getClientUrl() {
-        return PropertyManager.getProperty("uat.client_url");
+    public String getClientUrl()
+    {
+        return clientUrl;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
             return false;
         }
-        if (!(obj instanceof UATEnvironment)) {
+        if (!(obj instanceof DevEnvironment))
+        {
             return false;
         }
-        UATEnvironment that = (UATEnvironment) obj;
+        DevEnvironment that = (DevEnvironment) obj;
         return getDatabasePath().equals(that.getDatabasePath());
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return getDatabasePath().hashCode();
     }
 }

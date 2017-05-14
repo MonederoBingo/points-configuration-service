@@ -1,45 +1,77 @@
 package com.monederobingo.points_configuration.common.environments;
 
-import com.monederobingo.points_configuration.common.PropertyManager;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-public class DevEnvironment extends Environment {
+@Component
+public class DevEnvironment extends Environment
+{
+    @Value("${db_driver}")
+    private String dbDriver;
+
+    @Value("${db_driver_class}")
+    private String dbDriverClass;
+
+    @Value("${dev.db_url}")
+    private String dbUrl;
+
+    @Value("${dev.db_user}")
+    private String dbUser;
+
+    @Value("${dev.db_password}")
+    private String dbPassword;
+
+    @Value("${dev.images_dir}")
+    private String imagesDir;
+
+    @Value("${dev.client_url}")
+    private String clientUrl;
 
     @Override
-    public String getDatabasePath() {
-        return PropertyManager.getProperty("db_driver") + PropertyManager.getProperty("dev.db_url");
+    public String getDatabasePath()
+    {
+        return dbDriver + dbUrl;
+    }
+
+    public String getDbUrl()
+    {
+        return dbUrl;
+    }
+
+    public String getDatabaseDriverClass()
+    {
+        return dbDriverClass;
+    }
+
+    public String getDatabaseUsername()
+    {
+        return dbUser;
+    }
+
+    public String getDatabasePassword()
+    {
+        return dbPassword;
+    }
+
+    public String getImageDir()
+    {
+        return imagesDir;
+    }
+
+    public String getClientUrl()
+    {
+        return clientUrl;
     }
 
     @Override
-    public String getDatabaseDriverClass() {
-        return PropertyManager.getProperty("db_driver_class");
-    }
-
-    @Override
-    public String getDatabaseUsername() {
-        return PropertyManager.getProperty("dev.db_user");
-    }
-
-    @Override
-    public String getDatabasePassword() {
-        return PropertyManager.getProperty("dev.db_password");
-    }
-
-    @Override
-    public String getImageDir() {
-        return PropertyManager.getProperty("dev.images_dir");
-    }
-
-    @Override
-    public String getClientUrl() {
-        return PropertyManager.getProperty("dev.client_url");
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
             return false;
         }
-        if (!(obj instanceof DevEnvironment)) {
+        if (!(obj instanceof DevEnvironment))
+        {
             return false;
         }
         DevEnvironment that = (DevEnvironment) obj;
@@ -47,7 +79,8 @@ public class DevEnvironment extends Environment {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return getDatabasePath().hashCode();
     }
 }

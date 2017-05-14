@@ -3,21 +3,29 @@ package com.monederobingo.points_configuration.common.db.datasources;
 
 import javax.sql.DataSource;
 
+import com.monederobingo.points_configuration.common.db.util.DBUtil;
 import com.monederobingo.points_configuration.common.db.util.concurrent.Computable;
 import com.monederobingo.points_configuration.common.db.util.concurrent.Memoizer;
 import com.monederobingo.points_configuration.common.environments.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static com.monederobingo.points_configuration.common.db.util.DbUtil.createDataSource;
 
 @Component
 public class DataSourceFactoryImpl implements DataSourceFactory {
 
+    private final DBUtil dbUtil;
+
+    @Autowired
+    public DataSourceFactoryImpl(DBUtil dbUtil)
+    {
+        this.dbUtil = dbUtil;
+    }
 
     private final Computable<Environment, DataSource> _computable = new Computable<Environment, DataSource>() {
         @Override
         public DataSource compute(Environment arg) throws InterruptedException {
-            return createDataSource(arg);
+            return dbUtil.createDataSource(arg);
         }
     };
 
