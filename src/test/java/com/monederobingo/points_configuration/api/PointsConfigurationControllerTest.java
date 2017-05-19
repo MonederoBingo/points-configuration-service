@@ -12,12 +12,15 @@ import com.monederobingo.points_configuration.model.PointsConfiguration;
 import com.monederobingo.points_configuration.model.ServiceMessage;
 import com.monederobingo.points_configuration.model.ServiceResult;
 import com.monederobingo.points_configuration.services.PointsConfigurationServiceImpl;
+import com.monederobingo.points_configuration.storage.PointsConfigurationRepositoryImpl;
 import org.easymock.EasyMock;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
 public class PointsConfigurationControllerTest
 {
+    private PointsConfigurationRepositoryImpl pointsConfigurationRepository = createMock(PointsConfigurationRepositoryImpl.class);
+
     @Test
     public void testGet() throws Exception {
         PointsConfiguration expectedPointsConfiguration = new PointsConfiguration();
@@ -27,7 +30,7 @@ public class PointsConfigurationControllerTest
         ServiceResult<PointsConfiguration> expectedServiceResult = new ServiceResult<>(true, ServiceMessage.EMPTY,
                 expectedPointsConfiguration);
         PointsConfigurationServiceImpl pointsConfigurationService = createPointsConfigurationServiceForGet(expectedServiceResult);
-        PointsConfigurationController pointsConfigurationController = new PointsConfigurationController(pointsConfigurationService);
+        PointsConfigurationController pointsConfigurationController = new PointsConfigurationController(pointsConfigurationService, pointsConfigurationRepository);
 
         ResponseEntity<ServiceResult<PointsConfiguration>> responseEntity = pointsConfigurationController.get(1);
         assertNotNull(responseEntity);
@@ -49,7 +52,7 @@ public class PointsConfigurationControllerTest
     public void testUpdate() throws Exception {
         ServiceResult<Boolean> expectedServiceResult = new ServiceResult<>(true, ServiceMessage.EMPTY, true);
         PointsConfigurationServiceImpl pointsConfigurationService = createPointsConfigurationServiceForUpdate(expectedServiceResult);
-        PointsConfigurationController pointsConfigurationController = new PointsConfigurationController(pointsConfigurationService);
+        PointsConfigurationController pointsConfigurationController = new PointsConfigurationController(pointsConfigurationService, pointsConfigurationRepository);
 
         ResponseEntity<ServiceResult<Boolean>> responseEntity = pointsConfigurationController.update(new PointsConfiguration());
         assertNotNull(responseEntity);

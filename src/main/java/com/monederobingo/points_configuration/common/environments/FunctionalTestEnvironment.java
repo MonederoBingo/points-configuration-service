@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 public class FunctionalTestEnvironment extends Environment
 {
 
-    @Value("${db_driver}")
+    @Value("${db_savepoint_driver}")
     private String dbDriver;
 
-    @Value("${db_driver_class}")
+    @Value("${db_savepoint_driver_class}")
     private String dbDriverClass;
 
     @Value("${functional_test.db_url}")
