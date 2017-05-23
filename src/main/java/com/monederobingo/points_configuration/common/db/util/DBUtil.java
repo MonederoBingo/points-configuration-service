@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class DBUtil
 {
-
     private final UnitTestEnvironment unitTestEnvironment;
     private final DevEnvironment devEnvironment;
 

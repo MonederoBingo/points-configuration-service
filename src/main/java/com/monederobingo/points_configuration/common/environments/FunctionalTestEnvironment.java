@@ -10,7 +10,7 @@ public class FunctionalTestEnvironment extends Environment
     @Value("${db_savepoint_driver}")
     private String dbDriver;
 
-    @Value("${db_savepoint_driver_class}")
+    @Value("com.monederobingo.points_configuration.common.db.jdbc.SavepointPgProxyDriver")
     private String dbDriverClass;
 
     @Value("${functional_test.db_url}")
