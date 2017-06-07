@@ -9,7 +9,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.monederobingo.points_configuration.model.PointsConfiguration;
-import com.monederobingo.points_configuration.model.ServiceMessage;
 import com.monederobingo.points_configuration.model.ServiceResult;
 import com.monederobingo.points_configuration.services.PointsConfigurationServiceImpl;
 import com.monederobingo.points_configuration.storage.PointsConfigurationRepositoryImpl;
@@ -27,7 +26,7 @@ public class PointsConfigurationControllerTest
         expectedPointsConfiguration.setCompanyId(1);
         expectedPointsConfiguration.setPointsToEarn(10);
         expectedPointsConfiguration.setRequiredAmount(100);
-        ServiceResult<PointsConfiguration> expectedServiceResult = new ServiceResult<>(true, ServiceMessage.EMPTY,
+        ServiceResult<PointsConfiguration> expectedServiceResult = new ServiceResult<>(true, "",
                 expectedPointsConfiguration);
         PointsConfigurationServiceImpl pointsConfigurationService = createPointsConfigurationServiceForGet(expectedServiceResult);
         PointsConfigurationController pointsConfigurationController = new PointsConfigurationController(pointsConfigurationService, pointsConfigurationRepository);
@@ -50,7 +49,7 @@ public class PointsConfigurationControllerTest
 
     @Test
     public void testUpdate() throws Exception {
-        ServiceResult<Boolean> expectedServiceResult = new ServiceResult<>(true, ServiceMessage.EMPTY, true);
+        ServiceResult<Boolean> expectedServiceResult = new ServiceResult<>(true, "", true);
         PointsConfigurationServiceImpl pointsConfigurationService = createPointsConfigurationServiceForUpdate(expectedServiceResult);
         PointsConfigurationController pointsConfigurationController = new PointsConfigurationController(pointsConfigurationService, pointsConfigurationRepository);
 

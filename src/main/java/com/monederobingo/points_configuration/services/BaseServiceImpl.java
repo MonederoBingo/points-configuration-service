@@ -8,8 +8,6 @@ import com.monederobingo.points_configuration.common.environments.Environment;
 import com.monederobingo.points_configuration.common.environments.FunctionalTestEnvironment;
 import com.monederobingo.points_configuration.common.environments.ProdEnvironment;
 import com.monederobingo.points_configuration.common.environments.UATEnvironment;
-import com.monederobingo.points_configuration.common.i18n.Message;
-import com.monederobingo.points_configuration.model.ServiceMessage;
 
 public class BaseServiceImpl {
 
@@ -17,10 +15,6 @@ public class BaseServiceImpl {
 
     public BaseServiceImpl(ThreadContextService threadContextService) {
         _threadContextService = threadContextService;
-    }
-
-    public ServiceMessage getServiceMessage(Message message, String... params) {
-        return ServiceMessage.createServiceMessage(message, getThreadContext().getLanguage(), params);
     }
 
     public boolean isProdEnvironment() {

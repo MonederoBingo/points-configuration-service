@@ -1,5 +1,6 @@
 package com.monederobingo.points_configuration.services;
 
+import static com.monederobingo.points_configuration.common.i18n.Message.UPDATED_CONFIGURATION;
 import static org.easymock.EasyMock.anyLong;
 import static org.easymock.EasyMock.anyObject;
 import static org.easymock.EasyMock.createMock;
@@ -10,9 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.monederobingo.points_configuration.common.i18n.Message;
 import com.monederobingo.points_configuration.model.PointsConfiguration;
-import com.monederobingo.points_configuration.model.ServiceMessage;
 import com.monederobingo.points_configuration.model.ServiceResult;
 import com.monederobingo.points_configuration.services.interfaces.PointsConfigurationRepository;
 import org.junit.Test;
@@ -46,18 +45,11 @@ public class PointsConfigurationServiceImplTest
     public void testUpdate() throws Exception
     {
         PointsConfigurationRepository pointsConfigurationRepository = createPointsConfigurationRepositoryForUpdate();
-        PointsConfigurationServiceImpl pointsConfigurationService = new PointsConfigurationServiceImpl(pointsConfigurationRepository, null)
-        {
-            @Override
-            public ServiceMessage getServiceMessage(Message message, String... params)
-            {
-                return new ServiceMessage(message.name());
-            }
-        };
+        PointsConfigurationServiceImpl pointsConfigurationService = new PointsConfigurationServiceImpl(pointsConfigurationRepository, null);
         ServiceResult<Boolean> serviceResult = pointsConfigurationService.update(new PointsConfiguration());
         assertNotNull(serviceResult);
         assertTrue(serviceResult.isSuccess());
-        assertEquals(Message.CONFIGURATION_UPDATED.name(), serviceResult.getMessage());
+        assertEquals(UPDATED_CONFIGURATION.getMessage(), serviceResult.getMessage());
         assertEquals(true, serviceResult.getObject());
         verify(pointsConfigurationRepository);
     }

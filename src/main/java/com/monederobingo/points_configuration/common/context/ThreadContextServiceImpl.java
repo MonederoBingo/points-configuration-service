@@ -1,10 +1,8 @@
 package com.monederobingo.points_configuration.common.context;
 
-
 import com.monederobingo.points_configuration.common.db.queryagent.QueryAgent;
 import com.monederobingo.points_configuration.common.db.queryagent.QueryAgentFactory;
 import com.monederobingo.points_configuration.common.environments.Environment;
-import com.monederobingo.points_configuration.common.i18n.Language;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -27,7 +25,6 @@ public class ThreadContextServiceImpl implements ThreadContextService {
         ThreadContext threadContext = new ThreadContext();
         final QueryAgent queryAgent = _queryAgentFactory.getQueryAgent(environment);
         threadContext.setClientQueryAgent(queryAgent);
-        threadContext.setLanguage(Language.getByLangId(language));
         threadContext.setEnvironment(environment);
         setThreadContextOnThread(threadContext);
     }

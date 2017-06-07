@@ -1,25 +1,23 @@
 package com.monederobingo.points_configuration.model;
 
-import com.monederobingo.points_configuration.common.i18n.Language;
-
 public class ServiceResult<T> {
     private final boolean success;
-    private final ServiceMessage message;
+    private final String message;
     private final T object;
     private String extraInfo;
 
-    public ServiceResult(boolean success, ServiceMessage serviceMessage, T object) {
+    public ServiceResult(boolean success, String serviceMessage, T object) {
         this(success, serviceMessage, object, "");
     }
 
-    private ServiceResult(boolean success, ServiceMessage serviceMessage, T object, String extraInfo) {
+    private ServiceResult(boolean success, String serviceMessage, T object, String extraInfo) {
         this.success = success;
         this.message = serviceMessage;
         this.object = object;
         this.extraInfo = extraInfo;
     }
 
-    public ServiceResult(boolean success, ServiceMessage serviceMessage) {
+    public ServiceResult(boolean success, String serviceMessage) {
         this(success, serviceMessage, null, "");
     }
 
@@ -29,11 +27,7 @@ public class ServiceResult<T> {
     }
 
     public String getMessage() {
-        return message.getMessage();
-    }
-
-    public String getTranslation(Language language) {
-        return message.getTranslation(language);
+        return message;
     }
 
     public T getObject() {

@@ -1,12 +1,13 @@
 package com.monederobingo.points_configuration.api;
 
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import com.monederobingo.points_configuration.api.interfaces.FunctionalTestTransactionService;
+import com.monederobingo.points_configuration.model.ServiceResult;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.monederobingo.points_configuration.api.interfaces.FunctionalTestTransactionService;
-import com.monederobingo.points_configuration.model.ServiceMessage;
-import com.monederobingo.points_configuration.model.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class AcceptanceTestTransactionController
         if (request.getServerName().equals("test.localhost")) {
             _functionalTestTransactionService.beginTransaction();
         }
-        return new ResponseEntity<>(new ServiceResult<>(true, new ServiceMessage("")), HttpStatus.OK);
+        return new ResponseEntity<>(new ServiceResult<>(true, ""), OK);
     }
 
     @RequestMapping(value = "/rollback", method = GET)
@@ -38,6 +39,6 @@ public class AcceptanceTestTransactionController
         if (request.getServerName().equals("test.localhost")) {
             _functionalTestTransactionService.rollbackTransaction();
         }
-        return new ResponseEntity<>(new ServiceResult<>(true, new ServiceMessage("")), HttpStatus.OK);
+        return new ResponseEntity<>(new ServiceResult<>(true, ""), OK);
     }
 }
