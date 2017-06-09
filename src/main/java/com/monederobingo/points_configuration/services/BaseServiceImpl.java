@@ -1,13 +1,13 @@
 package com.monederobingo.points_configuration.services;
 
+import com.monederobingo.libs.common.environments.DevEnvironment;
+import com.monederobingo.libs.common.environments.Environment;
+import com.monederobingo.libs.common.environments.FunctionalTestEnvironment;
+import com.monederobingo.libs.common.environments.ProdEnvironment;
+import com.monederobingo.libs.common.environments.UATEnvironment;
 import com.monederobingo.points_configuration.common.context.ThreadContext;
 import com.monederobingo.points_configuration.common.context.ThreadContextService;
 import com.monederobingo.points_configuration.common.db.queryagent.QueryAgent;
-import com.monederobingo.points_configuration.common.environments.DevEnvironment;
-import com.monederobingo.points_configuration.common.environments.Environment;
-import com.monederobingo.points_configuration.common.environments.FunctionalTestEnvironment;
-import com.monederobingo.points_configuration.common.environments.ProdEnvironment;
-import com.monederobingo.points_configuration.common.environments.UATEnvironment;
 
 public class BaseServiceImpl {
 

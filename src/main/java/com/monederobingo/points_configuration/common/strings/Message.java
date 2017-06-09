@@ -1,4 +1,4 @@
-package com.monederobingo.points_configuration.common.i18n;
+package com.monederobingo.points_configuration.common.strings;
 
 public enum Message {
     SERVER_ERROR("server.error"),

@@ -1,6 +1,5 @@
 package com.monederobingo.points_configuration.common.db.queryagent;
 
-
 import com.monederobingo.points_configuration.common.db.jdbc.SavepointProxyConnection;
 import com.monederobingo.points_configuration.common.db.util.DbBuilder;
 
@@ -13,7 +12,6 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
-
 
 public class QueryAgent {
 

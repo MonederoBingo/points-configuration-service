@@ -1,7 +1,7 @@
 package com.monederobingo.points_configuration.common.context;
 
+import com.monederobingo.libs.common.environments.Environment;
 import com.monederobingo.points_configuration.common.db.queryagent.QueryAgent;
-import com.monederobingo.points_configuration.common.environments.Environment;
 
 public class ThreadContext {
     private QueryAgent _clientQueryAgent;

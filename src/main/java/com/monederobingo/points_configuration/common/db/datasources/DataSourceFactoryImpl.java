@@ -1,12 +1,12 @@
 package com.monederobingo.points_configuration.common.db.datasources;
 
-
-import javax.sql.DataSource;
-
+import com.monederobingo.libs.common.environments.Environment;
 import com.monederobingo.points_configuration.common.db.util.DBUtil;
 import com.monederobingo.points_configuration.common.db.util.concurrent.Computable;
 import com.monederobingo.points_configuration.common.db.util.concurrent.Memoizer;
-import com.monederobingo.points_configuration.common.environments.Environment;
+
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

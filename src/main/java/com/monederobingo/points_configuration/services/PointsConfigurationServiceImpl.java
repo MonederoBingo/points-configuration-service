@@ -1,7 +1,7 @@
 package com.monederobingo.points_configuration.services;
 
-import static com.monederobingo.points_configuration.common.i18n.Message.SERVER_ERROR;
-import static com.monederobingo.points_configuration.common.i18n.Message.UPDATED_CONFIGURATION;
+import static com.monederobingo.points_configuration.common.strings.Message.SERVER_ERROR;
+import static com.monederobingo.points_configuration.common.strings.Message.UPDATED_CONFIGURATION;
 
 import com.monederobingo.points_configuration.api.interfaces.PointsConfigurationService;
 import com.monederobingo.points_configuration.common.context.ThreadContextService;
@@ -20,26 +20,35 @@ public class PointsConfigurationServiceImpl extends BaseServiceImpl implements P
     private final PointsConfigurationRepository _pointsConfigurationRepository;
 
     @Autowired
-    public PointsConfigurationServiceImpl(PointsConfigurationRepository pointsConfigurationRepository, ThreadContextService threadContextService) {
+    public PointsConfigurationServiceImpl(PointsConfigurationRepository pointsConfigurationRepository, ThreadContextService threadContextService)
+    {
         super(threadContextService);
         _pointsConfigurationRepository = pointsConfigurationRepository;
     }
 
-    public ServiceResult<PointsConfiguration> getByCompanyId(long companyId) {
-        try {
+    public ServiceResult<PointsConfiguration> getByCompanyId(long companyId)
+    {
+        try
+        {
             PointsConfiguration pointsConfiguration = _pointsConfigurationRepository.getByCompanyId(companyId);
             return new ServiceResult<>(true, "", pointsConfiguration);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             logger.error(ex.getMessage(), ex);
             return new ServiceResult<>(false, SERVER_ERROR.getMessage(), null);
         }
     }
 
-    public ServiceResult<Boolean> update(PointsConfiguration pointsConfiguration) {
-        try {
+    public ServiceResult<Boolean> update(PointsConfiguration pointsConfiguration)
+    {
+        try
+        {
             int updatedRows = _pointsConfigurationRepository.update(pointsConfiguration);
             return new ServiceResult<>(true, UPDATED_CONFIGURATION.getMessage(), updatedRows == 1);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             logger.error(ex.getMessage(), ex);
             return new ServiceResult<>(false, SERVER_ERROR.getMessage(), null);
         }

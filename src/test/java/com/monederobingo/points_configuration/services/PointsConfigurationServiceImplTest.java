@@ -1,6 +1,6 @@
 package com.monederobingo.points_configuration.services;
 
-import static com.monederobingo.points_configuration.common.i18n.Message.UPDATED_CONFIGURATION;
+import static com.monederobingo.points_configuration.common.strings.Message.UPDATED_CONFIGURATION;
 import static org.easymock.EasyMock.anyLong;
 import static org.easymock.EasyMock.anyObject;
 import static org.easymock.EasyMock.createMock;

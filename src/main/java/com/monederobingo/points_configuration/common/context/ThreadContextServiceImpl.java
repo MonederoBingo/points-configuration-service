@@ -1,8 +1,8 @@
 package com.monederobingo.points_configuration.common.context;
 
+import com.monederobingo.libs.common.environments.Environment;
 import com.monederobingo.points_configuration.common.db.queryagent.QueryAgent;
 import com.monederobingo.points_configuration.common.db.queryagent.QueryAgentFactory;
-import com.monederobingo.points_configuration.common.environments.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;

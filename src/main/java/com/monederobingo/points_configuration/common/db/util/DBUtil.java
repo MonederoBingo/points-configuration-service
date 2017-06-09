@@ -2,9 +2,9 @@ package com.monederobingo.points_configuration.common.db.util;
 
 import javax.sql.DataSource;
 
-import com.monederobingo.points_configuration.common.environments.DevEnvironment;
-import com.monederobingo.points_configuration.common.environments.Environment;
-import com.monederobingo.points_configuration.common.environments.UnitTestEnvironment;
+import com.monederobingo.libs.common.environments.DevEnvironment;
+import com.monederobingo.libs.common.environments.Environment;
+import com.monederobingo.libs.common.environments.UnitTestEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
