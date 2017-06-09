@@ -3,8 +3,8 @@ package com.monederobingo.points_configuration.services;
 import static com.monederobingo.points_configuration.common.strings.Message.SERVER_ERROR;
 import static com.monederobingo.points_configuration.common.strings.Message.UPDATED_CONFIGURATION;
 
+import com.monederobingo.libs.common.context.ThreadContextService;
 import com.monederobingo.points_configuration.api.interfaces.PointsConfigurationService;
-import com.monederobingo.points_configuration.common.context.ThreadContextService;
 import com.monederobingo.points_configuration.model.PointsConfiguration;
 import com.monederobingo.points_configuration.model.ServiceResult;
 import com.monederobingo.points_configuration.services.interfaces.PointsConfigurationRepository;

@@ -1,13 +1,12 @@
 package com.monederobingo.points_configuration.services;
 
+import com.monederobingo.libs.common.context.ThreadContext;
+import com.monederobingo.libs.common.context.ThreadContextService;
 import com.monederobingo.libs.common.environments.DevEnvironment;
 import com.monederobingo.libs.common.environments.Environment;
 import com.monederobingo.libs.common.environments.FunctionalTestEnvironment;
 import com.monederobingo.libs.common.environments.ProdEnvironment;
 import com.monederobingo.libs.common.environments.UATEnvironment;
-import com.monederobingo.points_configuration.common.context.ThreadContext;
-import com.monederobingo.points_configuration.common.context.ThreadContextService;
-import com.monederobingo.points_configuration.common.db.queryagent.QueryAgent;
 
 public class BaseServiceImpl {
 
@@ -43,9 +42,5 @@ public class BaseServiceImpl {
 
     public ThreadContext getThreadContext() {
         return _threadContextService.getThreadContext();
-    }
-
-    public QueryAgent getQueryAgent() {
-        return _threadContextService.getQueryAgent();
     }
 }
