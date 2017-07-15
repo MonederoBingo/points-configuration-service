@@ -2,6 +2,7 @@ package com.monederobingo.points_configuration.storage;
 
 import static java.lang.Integer.parseInt;
 
+import com.monederobingo.libs.common.context.ThreadContextService;
 import com.monederobingo.points_configuration.model.PointsConfiguration;
 import com.monederobingo.points_configuration.services.interfaces.PointsConfigurationRepository;
 
@@ -9,8 +10,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,7 +28,15 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class PointsConfigurationRepositoryImpl extends BaseRepository implements PointsConfigurationRepository
 {
-    private final String DATABASE_SERVICE_URL = "http://test.localhost:30001/";
+    private final EurekaClient eurekaClient;
+    private final ThreadContextService threadContextService;
+
+    @Autowired
+    public PointsConfigurationRepositoryImpl(@Qualifier("eurekaClient") EurekaClient eurekaClient, ThreadContextService threadContextService)
+    {
+        this.eurekaClient = eurekaClient;
+        this.threadContextService = threadContextService;
+    }
 
     public PointsConfiguration getByCompanyId(final long companyId) throws Exception
     {
@@ -31,7 +44,7 @@ public class PointsConfigurationRepositoryImpl extends BaseRepository implements
                 new SelectQuery("SELECT * FROM points_configuration WHERE company_id = " + companyId + ";"),
                 getHttpHeaders());
         ResponseEntity<DatabaseServiceResult> responseEntity = getRestTemplate().postForEntity(
-                DATABASE_SERVICE_URL + "/select",
+                getDatabaseURL() + "/select",
                 entity,
                 DatabaseServiceResult.class);
         if(responseEntity.getBody().getObject() == null)
@@ -57,7 +70,7 @@ public class PointsConfigurationRepositoryImpl extends BaseRepository implements
         return restTemplate;
     }
 
-    public PointsConfiguration buildPointsConfiguration(String stringObject) throws SQLException, JSONException
+    private PointsConfiguration buildPointsConfiguration(String stringObject) throws SQLException, JSONException
     {
         JSONObject object = new JSONObject(stringObject);
         PointsConfiguration pointsConfiguration = new PointsConfiguration();
@@ -79,7 +92,7 @@ public class PointsConfigurationRepositoryImpl extends BaseRepository implements
                 new InsertQuery(sql, "points_configuration_id"),
                 getHttpHeaders());
         ResponseEntity<DatabaseServiceResult> responseEntity = getRestTemplate().postForEntity(
-                DATABASE_SERVICE_URL + "/insert",
+                getDatabaseURL() + "/insert",
                 entity,
                 DatabaseServiceResult.class);
         if(responseEntity.getBody().getObject() == null)
@@ -99,9 +112,20 @@ public class PointsConfigurationRepositoryImpl extends BaseRepository implements
         RestTemplate restTemplate = getRestTemplate();
         UpdateQuery updateQuery = new UpdateQuery(sql);
         ResponseEntity<DatabaseServiceResult> responseEntity = restTemplate.postForEntity(
-                DATABASE_SERVICE_URL + "/update",
+                getDatabaseURL() + "/update",
                 updateQuery,
                 DatabaseServiceResult.class);
         return parseInt(responseEntity.getBody().getObject().toString());
+    }
+
+    private String getDatabaseURL()
+    {
+        InstanceInfo instanceInfo = eurekaClient.getNextServerFromEureka("database", false);
+        String homePageUrl = instanceInfo.getHomePageUrl();
+        boolean hasHttps = homePageUrl.contains("https://");
+        homePageUrl = homePageUrl.replace("http://", "");
+        homePageUrl = homePageUrl.replace("https://", "");
+        homePageUrl = threadContextService.getEnvironment().getURIPrefix() + homePageUrl;
+        return hasHttps ? "https://" + homePageUrl : "http://" + homePageUrl;
     }
 }
