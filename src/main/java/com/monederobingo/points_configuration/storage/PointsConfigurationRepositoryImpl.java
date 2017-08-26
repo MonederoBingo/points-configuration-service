@@ -18,6 +18,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import xyz.greatapp.libs.service.requests.database.ColumnValue;
+import xyz.greatapp.libs.service.requests.database.InsertQueryRQ;
 import xyz.greatapp.libs.service.requests.database.SelectQueryRQ;
 
 import java.sql.SQLException;
@@ -79,14 +80,13 @@ public class PointsConfigurationRepositoryImpl extends BaseRepository implements
     }
 
     public long insert(PointsConfiguration pointsConfiguration) throws Exception {
-        String sql = "INSERT INTO points_configuration(company_id, points_to_earn, required_amount)" +
-                " VALUES (" +
-                pointsConfiguration.getCompanyId() + ", " +
-                pointsConfiguration.getPointsToEarn() + ", " +
-                pointsConfiguration.getRequiredAmount() + ");";
-
-        HttpEntity<InsertQuery> entity = new HttpEntity<>(
-                new InsertQuery(sql, "points_configuration_id"),
+        ColumnValue[] values = new ColumnValue[]{
+                new ColumnValue("company_id", pointsConfiguration.getCompanyId()),
+                new ColumnValue("points_to_earn", pointsConfiguration.getPointsToEarn()),
+                new ColumnValue("required_amount", pointsConfiguration.getRequiredAmount())
+        };
+        HttpEntity<InsertQueryRQ> entity = new HttpEntity<>(
+                new InsertQueryRQ("points_configuration", values, "points_configuration_id"),
                 getHttpHeaders());
         ResponseEntity<DatabaseServiceResult> responseEntity = getRestTemplate().postForEntity(
                 getDatabaseURL() + "/insert",
