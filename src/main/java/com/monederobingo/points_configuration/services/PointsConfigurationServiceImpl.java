@@ -26,17 +26,16 @@ public class PointsConfigurationServiceImpl extends BaseServiceImpl implements P
         _pointsConfigurationRepository = pointsConfigurationRepository;
     }
 
-    public ServiceResult<PointsConfiguration> getByCompanyId(long companyId)
+    public xyz.greatapp.libs.service.ServiceResult getByCompanyId(long companyId)
     {
         try
         {
-            PointsConfiguration pointsConfiguration = _pointsConfigurationRepository.getByCompanyId(companyId);
-            return new ServiceResult<>(true, "", pointsConfiguration);
+            return _pointsConfigurationRepository.getByCompanyId(companyId);
         }
         catch (Exception ex)
         {
             logger.error(ex.getMessage(), ex);
-            return new ServiceResult<>(false, SERVER_ERROR.getMessage(), null);
+            return new xyz.greatapp.libs.service.ServiceResult(false, SERVER_ERROR.getMessage(), null);
         }
     }
 

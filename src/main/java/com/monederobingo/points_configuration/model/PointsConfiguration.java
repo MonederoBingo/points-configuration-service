@@ -1,5 +1,8 @@
 package com.monederobingo.points_configuration.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class PointsConfiguration
 {
     private long companyId;
@@ -45,5 +48,14 @@ public class PointsConfiguration
     public long getPointsConfigurationId()
     {
         return pointsConfigurationId;
+    }
+
+    public JSONObject toJSONObject() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("points_configuration_id", pointsConfigurationId);
+        jsonObject.put("company_id", companyId);
+        jsonObject.put("points_to_earn", pointsToEarn);
+        jsonObject.put("required_amount", requiredAmount);
+        return jsonObject;
     }
 }

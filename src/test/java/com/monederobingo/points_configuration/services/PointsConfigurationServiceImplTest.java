@@ -14,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 import com.monederobingo.points_configuration.model.PointsConfiguration;
 import com.monederobingo.points_configuration.model.ServiceResult;
 import com.monederobingo.points_configuration.services.interfaces.PointsConfigurationRepository;
+import org.json.JSONObject;
 import org.junit.Test;
 
 public class PointsConfigurationServiceImplTest
@@ -28,15 +29,15 @@ public class PointsConfigurationServiceImplTest
         PointsConfigurationRepository pointsConfigurationRepository = createPointsConfigurationRepositoryForGet(expectedPointsConfiguration);
         PointsConfigurationServiceImpl pointsConfigurationService = new PointsConfigurationServiceImpl(pointsConfigurationRepository, null);
 
-        ServiceResult<PointsConfiguration> serviceResult = pointsConfigurationService.getByCompanyId(1);
+        xyz.greatapp.libs.service.ServiceResult serviceResult = pointsConfigurationService.getByCompanyId(1);
         assertNotNull(serviceResult);
         assertTrue(serviceResult.isSuccess());
         assertEquals("", serviceResult.getMessage());
         assertNotNull(serviceResult.getObject());
-        PointsConfiguration actualPointsConfiguration = serviceResult.getObject();
-        assertEquals(expectedPointsConfiguration.getCompanyId(), actualPointsConfiguration.getCompanyId());
-        assertEquals(expectedPointsConfiguration.getPointsToEarn(), actualPointsConfiguration.getPointsToEarn(), 0.00);
-        assertEquals(expectedPointsConfiguration.getRequiredAmount(), actualPointsConfiguration.getRequiredAmount(), 0.00);
+        JSONObject actualPointsConfiguration = new JSONObject(serviceResult.getObject());
+        assertEquals(expectedPointsConfiguration.getCompanyId(), actualPointsConfiguration.getLong("company_id"));
+        assertEquals(expectedPointsConfiguration.getPointsToEarn(), actualPointsConfiguration.getDouble("points_to_earn"), 0.00);
+        assertEquals(expectedPointsConfiguration.getRequiredAmount(), actualPointsConfiguration.getDouble("required_amount"), 0.00);
 
         verify(pointsConfigurationRepository);
     }
@@ -65,7 +66,8 @@ public class PointsConfigurationServiceImplTest
     private PointsConfigurationRepository createPointsConfigurationRepositoryForGet(PointsConfiguration pointsConfiguration) throws Exception
     {
         PointsConfigurationRepository pointsConfigurationRepository = createMock(PointsConfigurationRepository.class);
-        expect(pointsConfigurationRepository.getByCompanyId(anyLong())).andReturn(pointsConfiguration);
+        expect(pointsConfigurationRepository.getByCompanyId(anyLong()))
+                .andReturn(new xyz.greatapp.libs.service.ServiceResult(true, "", pointsConfiguration.toJSONObject().toString()));
         replay(pointsConfigurationRepository);
         return pointsConfigurationRepository;
     }

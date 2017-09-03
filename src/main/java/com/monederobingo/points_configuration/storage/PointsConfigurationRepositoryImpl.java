@@ -17,6 +17,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import xyz.greatapp.libs.service.ServiceResult;
 import xyz.greatapp.libs.service.requests.database.ColumnValue;
 import xyz.greatapp.libs.service.requests.database.InsertQueryRQ;
 import xyz.greatapp.libs.service.requests.database.SelectQueryRQ;
@@ -38,7 +39,7 @@ public class PointsConfigurationRepositoryImpl extends BaseRepository implements
         this.threadContextService = threadContextService;
     }
 
-    public PointsConfiguration getByCompanyId(final long companyId) throws Exception {
+    public ServiceResult getByCompanyId(final long companyId) throws Exception {
 
         ColumnValue[] filters = new ColumnValue[]{
                 new ColumnValue("company_id", companyId)
@@ -46,14 +47,11 @@ public class PointsConfigurationRepositoryImpl extends BaseRepository implements
         HttpEntity<SelectQueryRQ> entity = new HttpEntity<>(
                 new SelectQueryRQ("points_configuration", filters),
                 getHttpHeaders());
-        ResponseEntity<DatabaseServiceResult> responseEntity = getRestTemplate().postForEntity(
+        ResponseEntity<ServiceResult> responseEntity = getRestTemplate().postForEntity(
                 getDatabaseURL() + "/select",
                 entity,
-                DatabaseServiceResult.class);
-        if (responseEntity.getBody().getObject() == null) {
-            return null;
-        }
-        return buildPointsConfiguration(new JSONObject(responseEntity.getBody()).getString("object"));
+                ServiceResult.class);
+        return responseEntity.getBody();
     }
 
     private HttpHeaders getHttpHeaders() {

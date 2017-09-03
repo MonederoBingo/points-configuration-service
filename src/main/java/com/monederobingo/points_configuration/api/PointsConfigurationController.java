@@ -30,8 +30,8 @@ public class PointsConfigurationController
     }
 
     @RequestMapping(value = "/{companyId}", method = GET)
-    public ResponseEntity<ServiceResult<PointsConfiguration>> get(@PathVariable("companyId") long companyId) {
-        ServiceResult<PointsConfiguration> serviceResult = _pointsConfigurationService.getByCompanyId(companyId);
+    public ResponseEntity<xyz.greatapp.libs.service.ServiceResult> get(@PathVariable("companyId") long companyId) {
+        xyz.greatapp.libs.service.ServiceResult serviceResult = _pointsConfigurationService.getByCompanyId(companyId);
         return new ResponseEntity<>(serviceResult, HttpStatus.OK);
     }
 
